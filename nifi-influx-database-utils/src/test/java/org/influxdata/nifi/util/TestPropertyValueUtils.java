@@ -31,7 +31,6 @@ import org.apache.nifi.processor.ProcessContext;
 import org.apache.nifi.processor.ProcessSession;
 import org.apache.nifi.processor.exception.ProcessException;
 import org.apache.nifi.util.MockConfigurationContext;
-import org.apache.nifi.util.MockVariableRegistry;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
 import org.influxdata.nifi.processors.MapperOptions;
@@ -205,7 +204,7 @@ public class TestPropertyValueUtils {
             put(InfluxDBUtils.NULL_VALUE_BEHAVIOR, InfluxDBUtils.NullValueBehaviour.FAIL.name());
         }};
 
-        MockConfigurationContext context = new MockConfigurationContext(props, null, new MockVariableRegistry());
+        MockConfigurationContext context = new MockConfigurationContext(props, null,null);
 
         MapperOptions options = PropertyValueUtils.getMapperOptions(context, null);
 
@@ -236,7 +235,7 @@ public class TestPropertyValueUtils {
             put(InfluxDBUtils.NULL_VALUE_BEHAVIOR, InfluxDBUtils.NullValueBehaviour.FAIL.name());
         }};
 
-        MockConfigurationContext context = new MockConfigurationContext(props, null, new MockVariableRegistry());
+        MockConfigurationContext context = new MockConfigurationContext(props, null, null);
 
         Assertions.assertThrows(PropertyValueUtils.IllegalConfigurationException.class, () -> {
             PropertyValueUtils.getMapperOptions(context, null);
@@ -258,7 +257,7 @@ public class TestPropertyValueUtils {
             put(InfluxDBUtils.NULL_VALUE_BEHAVIOR, InfluxDBUtils.NullValueBehaviour.FAIL.name());
         }};
 
-        MockConfigurationContext context = new MockConfigurationContext(props, null, new MockVariableRegistry());
+        MockConfigurationContext context = new MockConfigurationContext(props, null, null);
 
         Assertions.assertThrows(PropertyValueUtils.IllegalConfigurationException.class, () -> {
             PropertyValueUtils.getMapperOptions(context, null);
