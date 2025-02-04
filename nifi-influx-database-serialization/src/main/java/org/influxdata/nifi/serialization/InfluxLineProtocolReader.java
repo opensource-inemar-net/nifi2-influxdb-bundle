@@ -77,7 +77,7 @@ public class InfluxLineProtocolReader extends AbstractControllerService implemen
     @OnEnabled
     public void onEnabled(final ConfigurationContext context) {
 
-        this.charsetName = context.getProperty(CHARSET).getValue();
+        this.charsetName = context.getProperty(CHARSET).evaluateAttributeExpressions().getValue();
     }
 
     @Override
