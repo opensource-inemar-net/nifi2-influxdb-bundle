@@ -26,8 +26,9 @@ import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.controller.ControllerService;
 import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.processor.util.StandardValidators;
-import org.apache.nifi.security.util.ClientAuth;
+//import org.apache.nifi.processor.util.StandardValidators;
 import org.apache.nifi.ssl.SSLContextService;
+import org.apache.nifi.security.util.ClientAuth;
 
 /**
  * This controller service interface providing client connection to InfluxDB 2.0.
@@ -61,7 +62,7 @@ public interface InfluxDatabaseService_2 extends ControllerService {
             .description("The URL to connect to. Eg: http://influxdb:8086")
             .defaultValue("http://localhost:8086")
             .required(true)
-            .expressionLanguageSupported(ExpressionLanguageScope.VARIABLE_REGISTRY)
+            .expressionLanguageSupported(ExpressionLanguageScope.NONE)
             .addValidator(StandardValidators.URL_VALIDATOR)
             .build();
 

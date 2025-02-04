@@ -75,7 +75,6 @@ import static org.influxdata.nifi.util.PropertyValueUtils.getEnumValue;
 import static org.influxdb.BatchOptions.DEFAULT_BATCH_INTERVAL_DURATION;
 import static org.influxdb.BatchOptions.DEFAULT_JITTER_INTERVAL_DURATION;
 
-@EventDriven
 @InputRequirement(InputRequirement.Requirement.INPUT_REQUIRED)
 @SupportsBatching
 @Tags({"influxdb", "measurement", "insert", "write", "put", "record", "timeseries"})
