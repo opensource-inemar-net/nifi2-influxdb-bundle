@@ -55,8 +55,8 @@ public class TestInfluxLineProtocolRecordSetWriter {
         convertRunner.setProperty(writerFactory, InfluxDBUtils.FIELDS, "amount");
         convertRunner.enableControllerService(writerFactory);
 
-        convertRunner.setProperty("record-reader", "record-reader");
-        convertRunner.setProperty("record-writer", "record-writer");
+        convertRunner.setProperty("Record Reader", "record-reader");
+        convertRunner.setProperty("Record Writer", "record-writer");
 
 
         convertRunner.enqueue(content);

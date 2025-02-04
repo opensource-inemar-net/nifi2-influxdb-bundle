@@ -94,8 +94,8 @@ public class TestInfluxLineProtocolReader extends AbstractTestInfluxLineProtocol
         convertRunner.addControllerService("record-writer", writerFactory);
         convertRunner.enableControllerService(writerFactory);
 
-        convertRunner.setProperty("record-reader", "record-reader");
-        convertRunner.setProperty("record-writer", "record-writer");
+        convertRunner.setProperty("Record Reader", "record-reader");
+        convertRunner.setProperty("Record Writer", "record-writer");
 
         convertRunner.enqueue(data);
         convertRunner.run();
@@ -157,8 +157,8 @@ public class TestInfluxLineProtocolReader extends AbstractTestInfluxLineProtocol
         convertRunner.addControllerService("record-writer", writerFactory);
         convertRunner.enableControllerService(writerFactory);
 
-        convertRunner.setProperty("record-reader", "record-reader");
-        convertRunner.setProperty("record-writer", "record-writer");
+        convertRunner.setProperty("Record Reader", "record-reader");
+        convertRunner.setProperty("Record Writer", "record-writer");
 
         convertRunner.enqueue(data);
         convertRunner.run();
@@ -188,8 +188,8 @@ public class TestInfluxLineProtocolReader extends AbstractTestInfluxLineProtocol
         convertRunner.addControllerService("record-writer", writerFactory);
         convertRunner.enableControllerService(writerFactory);
 
-        convertRunner.setProperty("record-reader", "record-reader");
-        convertRunner.setProperty("record-writer", "record-writer");
+        convertRunner.setProperty("Record Reader", "record-reader");
+        convertRunner.setProperty("Record Writer", "record-writer");
 
         convertRunner.enqueue(data);
         convertRunner.run();

@@ -82,7 +82,7 @@ public class InfluxLineProtocolRecordSetWriter extends AbstractControllerService
 
     @OnEnabled
     public void storeMapperOptions(final ConfigurationContext context) throws PropertyValueUtils.IllegalConfigurationException {
-        this.charSet = context.getProperty(CHARSET).getValue();
+        this.charSet = context.getProperty(CHARSET).evaluateAttributeExpressions().getValue();
         this.mapperOptions = PropertyValueUtils.getMapperOptions(context, null);
     }
 
