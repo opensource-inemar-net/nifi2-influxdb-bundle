@@ -55,6 +55,14 @@
             <artifactId>nifi-influx-database-processors</artifactId>
             <version>${nifi.myversion}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.nifi/nifi-standard-utils -->
+<dependency>
+    <groupId>org.apache.nifi</groupId>
+    <artifactId>nifi-standard-utils</artifactId>
+    <version>${nifi.standard_util_version}</version>
+</dependency>
+
     </dependencies>
 
     <build>

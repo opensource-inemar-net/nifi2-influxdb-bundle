@@ -100,7 +100,7 @@ public class TestStandardInfluxDatabaseServiceSettings extends AbstractTestStand
     @Test
     public void clientAuth() throws IOException, GeneralSecurityException {
 
-        testRunner.setProperty(service, InfluxDatabaseService.CLIENT_AUTH, SSLContextService.ClientAuth.NONE.name());
+        testRunner.setProperty(service, InfluxDatabaseService.CLIENT_AUTH, ClientAuth.NONE.name());
         testRunner.assertValid(service);
         testRunner.enableControllerService(service);
 
