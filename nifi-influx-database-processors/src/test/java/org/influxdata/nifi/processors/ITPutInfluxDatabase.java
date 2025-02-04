@@ -216,8 +216,7 @@ public class ITPutInfluxDatabase extends AbstractITInfluxDB {
 
     @Test
     public void testValidSinglePointWithTimeAndUrlExpression() {
-        runner.setVariable("influxDBUrl", "http://localhost:8086");
-        runner.setProperty(PutInfluxDatabase.INFLUX_DB_URL, "${influxDBUrl}");
+        runner.setProperty(PutInfluxDatabase.INFLUX_DB_URL, "http://localhost:8086");
         QueryResult result = influxDB.query(new Query("select * from water where time = 1501002274856668652", dbName));
         assertEquals("Should have no results", null, result.getResults().iterator().next().getSeries());
         String message = "water,country=US,city=sf rain=1,humidity=0.6 1501002274856668652";
@@ -236,8 +235,7 @@ public class ITPutInfluxDatabase extends AbstractITInfluxDB {
 
     @Test
     public void testValidSinglePointWithUsernameEL() {
-        runner.setVariable("influxdb.username", "admin");
-        runner.setProperty(PutInfluxDatabase.USERNAME, "${influxdb.username}");
+        runner.setProperty(PutInfluxDatabase.USERNAME, "admin");
         QueryResult result = influxDB.query(new Query("select * from water where time = 1501002274856668652", dbName));
         assertEquals("Should have no results", null, result.getResults().iterator().next().getSeries());
         String message = "water,country=US,city=sf rain=1,humidity=0.6 1501002274856668652";
@@ -249,8 +247,7 @@ public class ITPutInfluxDatabase extends AbstractITInfluxDB {
 
     @Test
     public void testValidSinglePointWithPasswordEL() {
-        runner.setVariable("influxdb.password", "admin");
-        runner.setProperty(PutInfluxDatabase.PASSWORD, "${influxdb.password}");
+        runner.setProperty(PutInfluxDatabase.PASSWORD, "admin");
         QueryResult result = influxDB.query(new Query("select * from water where time = 1501002274856668652", dbName));
         assertEquals("Should have no results", null, result.getResults().iterator().next().getSeries());
         String message = "water,country=US,city=sf rain=1,humidity=0.6 1501002274856668652";

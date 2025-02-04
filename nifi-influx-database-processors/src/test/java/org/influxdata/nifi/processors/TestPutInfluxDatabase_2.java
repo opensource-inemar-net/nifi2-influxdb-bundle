@@ -103,7 +103,7 @@ public class TestPutInfluxDatabase_2 {
         runner.setProperty(PutInfluxDatabase_2.BUCKET, "");
         runner.assertNotValid();
     }
-    
+
     @Test
     public void testEmptyOrg() {
         runner.setProperty(PutInfluxDatabase_2.ORG, "");
@@ -162,8 +162,7 @@ public class TestPutInfluxDatabase_2 {
 
     @Test
     public void testMaxRecordSizeOverThresholdEL() {
-        runner.setVariable("max.record.size", "1 B");
-        runner.setProperty(MAX_RECORDS_SIZE, "${max.record.size}");
+        runner.setProperty(MAX_RECORDS_SIZE, "1 B");
         runner.assertValid();
 
         byte[] bytes = "aa".getBytes();
@@ -222,7 +221,7 @@ public class TestPutInfluxDatabase_2 {
 
         assertEquals("Simulate error: SocketTimeoutException", flowFiles.get(0).getAttribute(INFLUX_DB_ERROR_MESSAGE));
     }
-    
+
     @Test
     public void testWriteServiceUnavailableExceptionRetry() {
 
@@ -263,7 +262,7 @@ public class TestPutInfluxDatabase_2 {
         byte[] bytes = "h2o_feet,location=coyote_creek level\\ water_level=1.0 1".getBytes();
 
         Map<String, String> headers = Collections.singletonMap("Retry-After", "149");
-        
+
         Mockito.doThrow(new InfluxException(createErrorResponse(429, headers))).when(mockWriteApi)
                 .writeRecord(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any());
 
@@ -280,7 +279,7 @@ public class TestPutInfluxDatabase_2 {
     public void testCannotInstantiateInfluxDBClient() throws InitializationException, IOException, GeneralSecurityException {
 
         byte[] bytes = "h2o_feet,location=coyote_creek level\\ water_level=1.0 1".getBytes();
-        
+
         PutInfluxDatabase_2 putInfluxDatabase_2 = new PutInfluxDatabase_2() {
             @Override
             public synchronized InfluxDBClient getInfluxDBClient(final ProcessContext context) {

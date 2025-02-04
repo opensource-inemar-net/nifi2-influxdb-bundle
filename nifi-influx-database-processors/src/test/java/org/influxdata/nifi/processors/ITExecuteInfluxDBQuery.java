@@ -52,8 +52,7 @@ public class ITExecuteInfluxDBQuery extends AbstractITInfluxDB {
         initInfluxDB();
         runner = TestRunners.newTestRunner(ExecuteInfluxDatabaseQuery.class);
         initializeRunner();
-        runner.setVariable("influxDBUrl", "http://localhost:8086");
-        runner.setProperty(PutInfluxDatabase.INFLUX_DB_URL, "${influxDBUrl}");
+        runner.setProperty(PutInfluxDatabase.INFLUX_DB_URL, "http://localhost:8086");
     }
 
     @Test
@@ -323,8 +322,7 @@ public class ITExecuteInfluxDBQuery extends AbstractITInfluxDB {
 
     @Test
     public void testValidTwoPointsUrlEL() {
-        runner.setVariable("influxDBUrl", "http://localhost:8086");
-        runner.setProperty(PutInfluxDatabase.INFLUX_DB_URL, "${influxDBUrl}");
+        runner.setProperty(PutInfluxDatabase.INFLUX_DB_URL, "http://localhost:8086");
         testValidTwoPoints();
     }
 
