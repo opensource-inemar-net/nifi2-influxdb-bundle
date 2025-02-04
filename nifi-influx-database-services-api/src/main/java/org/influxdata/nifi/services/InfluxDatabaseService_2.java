@@ -62,7 +62,7 @@ public interface InfluxDatabaseService_2 extends ControllerService {
             .description("The URL to connect to. Eg: http://influxdb:8086")
             .defaultValue("http://localhost:8086")
             .required(true)
-            .expressionLanguageSupported(ExpressionLanguageScope.NONE)
+            .expressionLanguageSupported(ExpressionLanguageScope.ENVIRONMENT)
             .addValidator(StandardValidators.URL_VALIDATOR)
             .build();
 
