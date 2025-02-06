@@ -1,11 +1,9 @@
-# InfluxDB Processors For Apache NiFi
+# InfluxDB Processors For Apache NiFi2
 
-[![CircleCI](https://circleci.com/gh/influxdata/nifi-influxdb-bundle.svg?style=svg)](https://circleci.com/gh/influxdata/nifi-influxdb-bundle)
-[![codecov](https://codecov.io/gh/influxdata/nifi-influxdb-bundle/branch/master/graph/badge.svg)](https://codecov.io/gh/influxdata/nifi-influxdb-bundle)
-[![License](https://img.shields.io/github/license/influxdata/nifi-influxdb-bundle.svg)](https://github.com/influxdata/nifi-influxdb-bundle/blob/master/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues-raw/influxdata/nifi-influxdb-bundle.svg)](https://github.com/influxdata/nifi-influxdb-bundle/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/influxdata/nifi-influxdb-bundle.svg)](https://github.com/influxdata/nifi-influxdb-bundle/pulls)
-[![Slack Status](https://img.shields.io/badge/slack-join_chat-white.svg?logo=slack&style=social)](https://www.influxdata.com/slack)
+[![License](https://img.shields.io/github/license/opensource-inemar-net/nifi2-influxdb-bundle.svg)](https://github.com/opensource-inemar-net/nifi2-influxdb-bundle/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues-raw/opensource-inemar-net/nifi2-influxdb-bundle.svg)](https://github.com/opensource-inemar-net/nifi2-influxdb-bundle/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/opensource-inemar-net/nifi2-influxdb-bundle.svg)](https://github.com/opensource-inemar-net/nifi2-influxdb-bundle/pulls)
+
 
 
 - [About this Project](#about-this-project)
