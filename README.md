@@ -1,3 +1,5 @@
+<meta name="google-site-verification" content="fT06H29Q_upIsQkYSTlAHNcRS24aUXs-vUJByIPL6S4" />
+
 # InfluxDB Processors For Apache NiFi2
 
 [![License](https://img.shields.io/github/license/opensource-inemar-net/nifi2-influxdb-bundle.svg)](https://github.com/opensource-inemar-net/nifi2-influxdb-bundle/blob/master/LICENSE)
