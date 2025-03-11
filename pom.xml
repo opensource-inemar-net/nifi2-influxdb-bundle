@@ -28,7 +28,7 @@
 		<!-- skip until remove org.json from Java client -->
         <enforcer.skip>true</enforcer.skip>
 
-        <nifi.main_version>2.2.0</nifi.main_version>
+        <nifi.main_version>2.3.0</nifi.main_version>
         <nifi.api_version>2.0.0</nifi.api_version>
         <nifi.version>2.0.0</nifi.version>
         <nifi.standard_util_version>2.0.0-M1</nifi.standard_util_version>
