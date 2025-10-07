@@ -192,8 +192,16 @@ public class PutInfluxDatabase extends AbstractInfluxDatabaseProcessor {
                         new Object[]{exception.getLocalizedMessage()}, exception);
                 session.transfer(flowFile, REL_FAILURE);
             }
+
             context.yield();
         } catch (Exception exception) {
+            // catch PKIX error and set ssl trust all globally for influx service
+            if(exception.getMessage().contains("PKIX path validation failed")){
+                PKIX_ERROR_OCCURED = true;
+                getLogger().error("PKIX path validation failed, switch to untrusted SSL if activated " + exception.getMessage());
+                session.penalize(flowFile); // penalize, then retry again with untrusted SSL
+            }
+
             getLogger().error(INFLUX_DB_FAIL_TO_INSERT,
                     new Object[]{exception.getLocalizedMessage()}, exception);
             flowFile = session.putAttribute(flowFile, INFLUX_DB_ERROR_MESSAGE, String.valueOf(exception.getMessage()));
