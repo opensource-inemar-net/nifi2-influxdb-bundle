@@ -77,7 +77,13 @@ public final class PropertyValueUtils {
             return defaultValue;
         }
 
-        String propertyValue = property.getValue();
+
+        String propertyValue = null;
+        if  (propertyDescriptor.isExpressionLanguageSupported()) {
+            propertyValue=property.evaluateAttributeExpressions().getValue();
+        } else {
+            propertyValue=property.getValue();
+        };
 
         Objects.requireNonNull(enumType, "Type of Enum is required");
         Objects.requireNonNull(defaultValue, "Default value which will be used if propertyValue is not enum value");
