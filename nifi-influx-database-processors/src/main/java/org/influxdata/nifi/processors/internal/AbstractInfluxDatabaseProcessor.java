@@ -123,6 +123,15 @@ public abstract class AbstractInfluxDatabaseProcessor extends AbstractProcessor 
             .addValidator(StandardValidators.DATA_SIZE_VALIDATOR)
             .build();
 
+    public static final PropertyDescriptor ALLOW_UNTRUSTED_SSL = new PropertyDescriptor.Builder()
+            .name("allow-untrusted-ssl")
+            .displayName("AllowUntrustedSSL")
+            .description("Allow untrusted SSL if PKIX error occurs")
+            .defaultValue("false")
+            .required(true)
+            .addValidator(StandardValidators.BOOLEAN_VALIDATOR)
+            .build();
+
     public static final Relationship REL_SUCCESS = new Relationship.Builder().name("success")
             .description("Successful FlowFiles that are saved to InfluxDB are routed to this relationship").build();
 
@@ -143,7 +152,9 @@ public abstract class AbstractInfluxDatabaseProcessor extends AbstractProcessor 
     public static final String INFLUX_DB_FAIL_TO_QUERY = "Failed to execute Flux query due {} to {}";
 
     protected AtomicReference<InfluxDB> influxDB = new AtomicReference<>();
+    protected static boolean PKIX_ERROR_OCCURED = false;
     protected long maxRecordsSize;
+
 
     /**
      * Helper method to create InfluxDB instance
@@ -152,12 +163,19 @@ public abstract class AbstractInfluxDatabaseProcessor extends AbstractProcessor 
     protected synchronized InfluxDB getInfluxDB(ProcessContext context) {
         if ( influxDB.get() == null ) {
             String username = context.getProperty(USERNAME).evaluateAttributeExpressions().getValue();
+            boolean allowuntrustedSSL = context.getProperty(ALLOW_UNTRUSTED_SSL).asBoolean();
             String password = context.getProperty(PASSWORD).evaluateAttributeExpressions().getValue();
             long connectionTimeout = context.getProperty(INFLUX_DB_CONNECTION_TIMEOUT).asTimePeriod(TimeUnit.SECONDS);
             String influxDbUrl = context.getProperty(INFLUX_DB_URL).evaluateAttributeExpressions().getValue();
             String clientType = context.getProperty(INFLUX_DB_CLIENT_TYPE).getValue();
             try {
-                influxDB.set(makeConnection(username, password, influxDbUrl, connectionTimeout, clientType));
+                if(PKIX_ERROR_OCCURED && allowuntrustedSSL){
+                    influxDB.set(makeConnectionunsafeSSL(username, password, influxDbUrl, connectionTimeout, clientType));
+                }else{
+                    influxDB.set(makeConnection(username, password, influxDbUrl, connectionTimeout, clientType));
+
+                }
+
             } catch(Exception e) {
                 getLogger().error("Error while getting connection {}", new Object[] { e.getLocalizedMessage() },e);
                 throw new RuntimeException("Error while getting connection " + e.getLocalizedMessage(),e);
@@ -171,6 +189,11 @@ public abstract class AbstractInfluxDatabaseProcessor extends AbstractProcessor 
     @OnScheduled
     public void onScheduled(final ProcessContext context) {
     }
+
+    protected InfluxDB makeConnectionunsafeSSL(String username, String password, String influxDbUrl, long connectionTimeout, final String clientType) {
+        return InfluxDBUtils.makeConnectionV1trustAll(influxDbUrl, username, password, connectionTimeout, null, clientType);
+    }
+
 
     protected InfluxDB makeConnection(String username, String password, String influxDbUrl, long connectionTimeout, final String clientType) {
         return InfluxDBUtils.makeConnectionV1(influxDbUrl, username, password, connectionTimeout, null, clientType);

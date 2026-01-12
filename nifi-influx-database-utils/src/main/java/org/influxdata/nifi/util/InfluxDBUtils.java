@@ -16,10 +16,13 @@
  */
 package org.influxdata.nifi.util;
 
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import javax.annotation.Nonnull;
+import javax.net.ssl.*;
 
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.InfluxDBClientFactory;
@@ -255,6 +258,103 @@ public final class InfluxDBUtils {
             .allowableValues(NULL_VALUE_BEHAVIOUR_IGNORE, NULL_VALUE_BEHAVIOUR_FAIL)
             .defaultValue(NULL_FIELD_VALUE_BEHAVIOUR_DEFAULT.name())
             .build();
+
+    private static SSLSocketFactory getUnsafeSSLSocketFactory() {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
+                        public void checkClientTrusted(X509Certificate[] chain, String authType) {}
+                        public void checkServerTrusted(X509Certificate[] chain, String authType) {}
+                    }
+            };
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new SecureRandom());
+            return sslContext.getSocketFactory();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static X509TrustManager getUnsafeTrustManager() {
+        return new X509TrustManager() {
+            public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
+            public void checkClientTrusted(X509Certificate[] chain, String authType) {}
+            public void checkServerTrusted(X509Certificate[] chain, String authType) {}
+        };
+    }
+    /**
+     * Create a connection to a InfluxDB.
+     *
+     * @param influxDbUrl       the url to connect to
+     * @param username          the username which is used to authorize against the influxDB instance
+     * @param password          the password for the username which is used to authorize against the influxDB instance
+     * @param connectionTimeout the default connect timeout
+     * @param configurer        to configure OkHttpClient.Builder with SSL
+     * @param clientType        to customize the User-Agent HTTP header
+     * @return InfluxDB client
+     */
+    @Nonnull
+    public static InfluxDB makeConnectionV1trustAll(String influxDbUrl,
+                                                    String username,
+                                                    String password,
+                                                    long connectionTimeout,
+                                                    Consumer<OkHttpClient.Builder> configurer,
+                                                    final String clientType) {
+        try {
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
+                        public void checkClientTrusted(X509Certificate[] chain, String authType) {}
+                        public void checkServerTrusted(X509Certificate[] chain, String authType) {}
+                    }
+            };
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, trustAllCerts, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to setup all-trusting SSL context", e);
+        }
+
+        // get version of influxdb-java
+        Package mainPackage = InfluxDBFactory.class.getPackage();
+        String version = mainPackage != null ? mainPackage.getImplementationVersion() : null;
+
+        // create User-Agent header content
+        String userAgent = String.format("influxdb-client-%s/%s",
+                clientType != null ? clientType : "java",
+                version != null ? version : "unknown");
+
+        OkHttpClient.Builder builder = new OkHttpClient
+                .Builder()
+                .connectTimeout(connectionTimeout, TimeUnit.SECONDS)
+                .readTimeout(connectionTimeout, TimeUnit.SECONDS)
+                .writeTimeout(connectionTimeout, TimeUnit.SECONDS)
+                // unsafe SSL
+                .sslSocketFactory(getUnsafeSSLSocketFactory(), getUnsafeTrustManager())
+                .hostnameVerifier((hostname, session) -> true)
+                // add interceptor with "User-Agent" header
+                .addInterceptor(chain -> {
+                    Request request = chain
+                            .request()
+                            .newBuilder()
+                            .header("User-Agent", userAgent)
+                            .build();
+                    return chain.proceed(request);
+                });
+
+        if (configurer != null) {
+            configurer.accept(builder);
+        }
+
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
+            return InfluxDBFactory.connect(influxDbUrl, builder);
+        } else {
+            return InfluxDBFactory.connect(influxDbUrl, username, password, builder);
+        }
+    }
 
     /**
      * Create a connection to a InfluxDB.

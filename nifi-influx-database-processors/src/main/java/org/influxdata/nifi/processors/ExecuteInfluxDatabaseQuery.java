@@ -249,6 +249,7 @@ public class ExecuteInfluxDatabaseQuery extends AbstractInfluxDatabaseProcessor 
                 session.transfer(outgoingFlowFile, REL_FAILURE);
             }
             context.yield();
+
         }
     }
 
