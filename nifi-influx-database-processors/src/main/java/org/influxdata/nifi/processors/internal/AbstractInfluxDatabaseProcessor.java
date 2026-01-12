@@ -17,6 +17,7 @@
 package org.influxdata.nifi.processors.internal;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.influxdata.nifi.util.InfluxDBUtils;
@@ -153,7 +154,7 @@ public abstract class AbstractInfluxDatabaseProcessor extends AbstractProcessor 
     public static final String INFLUX_DB_FAIL_TO_QUERY = "Failed to execute Flux query due {} to {}";
 
     protected AtomicReference<InfluxDB> influxDB = new AtomicReference<>();
-    protected static boolean PKIX_ERROR_OCCURED = false;
+    protected AtomicBoolean PKIX_ERROR_OCCURED = new AtomicBoolean(false);
     protected long maxRecordsSize;
 
 
@@ -170,7 +171,7 @@ public abstract class AbstractInfluxDatabaseProcessor extends AbstractProcessor 
             String influxDbUrl = context.getProperty(INFLUX_DB_URL).evaluateAttributeExpressions().getValue();
             String clientType = context.getProperty(INFLUX_DB_CLIENT_TYPE).getValue();
             try {
-                if(PKIX_ERROR_OCCURED && allowuntrustedSSL){
+                if(PKIX_ERROR_OCCURED.get() && allowuntrustedSSL){
                     influxDB.set(makeConnectionunsafeSSL(username, password, influxDbUrl, connectionTimeout, clientType));
                 }else{
                     influxDB.set(makeConnection(username, password, influxDbUrl, connectionTimeout, clientType));

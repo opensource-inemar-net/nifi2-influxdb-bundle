@@ -197,7 +197,7 @@ public class PutInfluxDatabase extends AbstractInfluxDatabaseProcessor {
         } catch (Exception exception) {
             // catch PKIX error and set ssl trust all globally for influx service
             if(exception.getMessage().contains("PKIX path validation failed")){
-                PKIX_ERROR_OCCURED = true;
+                PKIX_ERROR_OCCURED.set(true);
                 getLogger().error("PKIX path validation failed, switch to untrusted SSL if activated " + exception.getMessage());
                 session.penalize(flowFile); // penalize, then retry again with untrusted SSL
             }
