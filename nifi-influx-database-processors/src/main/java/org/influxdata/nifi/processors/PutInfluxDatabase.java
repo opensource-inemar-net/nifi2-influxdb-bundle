@@ -119,6 +119,7 @@ public class PutInfluxDatabase extends AbstractInfluxDatabaseProcessor {
         tempDescriptors.add(TIMESTAMP_PRECISION);
         tempDescriptors.add(MAX_RECORDS_SIZE);
         tempDescriptors.add(INFLUX_DB_CLIENT_TYPE);
+        tempDescriptors.add(ALLOW_UNTRUSTED_SSL);
         propertyDescriptors = Collections.unmodifiableList(tempDescriptors);
     }
 

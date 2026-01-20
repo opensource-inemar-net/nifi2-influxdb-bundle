@@ -290,7 +290,7 @@ public class PutInfluxDatabaseRecord extends AbstractInfluxDatabaseProcessor {
         propertyDescriptors.add(COMPLEX_FIELD_BEHAVIOR);
         propertyDescriptors.add(NULL_VALUE_BEHAVIOR);
         propertyDescriptors.add(MAX_RECORDS_SIZE);
-
+        propertyDescriptors.add(ALLOW_UNTRUSTED_SSL);
         PROPERTY_DESCRIPTORS = Collections.unmodifiableList(propertyDescriptors);
     }
 

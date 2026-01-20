@@ -137,6 +137,7 @@ public class ExecuteInfluxDatabaseQuery extends AbstractInfluxDatabaseProcessor 
         tempDescriptors.add(PASSWORD);
         tempDescriptors.add(CHARSET);
         tempDescriptors.add(INFLUX_DB_CLIENT_TYPE);
+        tempDescriptors.add(ALLOW_UNTRUSTED_SSL);
         propertyDescriptors = Collections.unmodifiableList(tempDescriptors);
     }
 

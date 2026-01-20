@@ -165,7 +165,12 @@ public abstract class AbstractInfluxDatabaseProcessor extends AbstractProcessor 
     protected synchronized InfluxDB getInfluxDB(ProcessContext context) {
         if ( influxDB.get() == null ) {
             String username = context.getProperty(USERNAME).evaluateAttributeExpressions().getValue();
-            boolean allowuntrustedSSL = context.getProperty(ALLOW_UNTRUSTED_SSL).evaluateAttributeExpressions().asBoolean();
+            boolean allowuntrustedSSL = true;
+            if(context.getProperty(ALLOW_UNTRUSTED_SSL) == null){
+                getLogger().info("ALLOW_UNTRUSTED_SSL was null, fallback to true");
+            }else{
+                allowuntrustedSSL = context.getProperty(ALLOW_UNTRUSTED_SSL).asBoolean();
+            }
             String password = context.getProperty(PASSWORD).evaluateAttributeExpressions().getValue();
             long connectionTimeout = context.getProperty(INFLUX_DB_CONNECTION_TIMEOUT).asTimePeriod(TimeUnit.SECONDS);
             String influxDbUrl = context.getProperty(INFLUX_DB_URL).evaluateAttributeExpressions().getValue();
