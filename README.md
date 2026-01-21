@@ -64,6 +64,7 @@ The Nar compatibility matrix:
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
 | [nifi-influx-database-nar-2.0.0-M01.nar](https://github.com/opensource-inemar-net/nifi2-influxdb-bundle/releases/download/2.0.0-M01/nifi-influx-database-nar-2.0.0-M01.nar) | 2.0.0-M01       | 2.2.0
 | [nifi-influx-database-nar-2.1.0.nar](https://github.com/opensource-inemar-net/nifi2-influxdb-bundle/releases/download/2.1.0/nifi-influx-database-nar-2.1.0.nar) | 2.1.0      | 2.7.2
+| [nifi-influx-database-nar-2.2.0.nar](https://github.com/opensource-inemar-net/nifi2-influxdb-bundle/releases/download/2.1.0/nifi-influx-database-nar-2.2.0.nar) | 2.2.0      | 2.7.2
 For example, to install the nar after download it to `~/Downloads`:
 
 ```bash

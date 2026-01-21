@@ -33,7 +33,7 @@
         <nifi.version>2.7.2</nifi.version>
         <nifi.standard_util_version>2.0.0-M1</nifi.standard_util_version>
 
-        <plugin.surefire.version>3.5.3</plugin.surefire.version>
+        <plugin.surefire.version>3.5.4</plugin.surefire.version>
         <plugin.jacoco.version>0.8.14</plugin.jacoco.version>
     </properties>
 
@@ -205,7 +205,7 @@
             <dependency>
                 <groupId>com.influxdb</groupId>
                 <artifactId>influxdb-client-java</artifactId>
-                <version>7.2.0</version>
+                <version>7.5.0</version>
             </dependency>
 
             <dependency>
@@ -218,6 +218,12 @@
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
             <version>2.13.2</version>
+        </dependency>
+
+                <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.21.0</version>
         </dependency>
 
         </dependencies>
