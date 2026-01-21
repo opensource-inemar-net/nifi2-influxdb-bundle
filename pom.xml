@@ -22,7 +22,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-         <nifi.myversion>2.1.0</nifi.myversion>
+         <nifi.myversion>2.2.0</nifi.myversion>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- skip until remove org.json from Java client -->
@@ -46,7 +46,7 @@
     <artifactId>nifi-influx-database-bundle</artifactId>
     <groupId>net.inemar.nifi</groupId>
     <packaging>pom</packaging>
-    <version>2.1.0</version>
+    <version>2.2.0</version>
 
     <modules>
         <module>nifi-influx-database-utils</module>

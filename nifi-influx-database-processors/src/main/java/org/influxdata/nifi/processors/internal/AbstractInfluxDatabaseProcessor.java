@@ -26,6 +26,7 @@ import org.influxdb.InfluxDB;
 import org.apache.nifi.annotation.lifecycle.OnScheduled;
 import org.apache.nifi.annotation.lifecycle.OnStopped;
 import org.apache.nifi.components.PropertyDescriptor;
+import org.apache.nifi.components.PropertyValue;
 import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.processor.AbstractProcessor;
 import org.apache.nifi.processor.ProcessContext;
@@ -165,7 +166,11 @@ public abstract class AbstractInfluxDatabaseProcessor extends AbstractProcessor 
     protected synchronized InfluxDB getInfluxDB(ProcessContext context) {
         if ( influxDB.get() == null ) {
             String username = context.getProperty(USERNAME).evaluateAttributeExpressions().getValue();
-            boolean allowuntrustedSSL = context.getProperty(ALLOW_UNTRUSTED_SSL).evaluateAttributeExpressions().asBoolean();
+            boolean allowuntrustedSSL = false;
+            PropertyValue allowuntrustedSSLProperty=context.getProperty(ALLOW_UNTRUSTED_SSL);
+            if (allowuntrustedSSLProperty!=null) {
+                allowuntrustedSSL = allowuntrustedSSLProperty.evaluateAttributeExpressions().asBoolean();
+            };
             String password = context.getProperty(PASSWORD).evaluateAttributeExpressions().getValue();
             long connectionTimeout = context.getProperty(INFLUX_DB_CONNECTION_TIMEOUT).asTimePeriod(TimeUnit.SECONDS);
             String influxDbUrl = context.getProperty(INFLUX_DB_URL).evaluateAttributeExpressions().getValue();
