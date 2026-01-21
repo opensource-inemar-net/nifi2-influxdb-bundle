@@ -33,7 +33,7 @@
         <nifi.version>2.7.2</nifi.version>
         <nifi.standard_util_version>2.0.0-M1</nifi.standard_util_version>
 
-        <plugin.surefire.version>3.5.3</plugin.surefire.version>
+        <plugin.surefire.version>3.5.4</plugin.surefire.version>
         <plugin.jacoco.version>0.8.14</plugin.jacoco.version>
     </properties>
 
