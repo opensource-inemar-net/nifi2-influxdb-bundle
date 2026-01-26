@@ -29,7 +29,7 @@
         <enforcer.skip>true</enforcer.skip>
 
         <nifi.main_version>2.7.2</nifi.main_version>
-        <nifi.api_version>2.5.0</nifi.api_version>
+        <nifi.api_version>2.6.0</nifi.api_version>
         <nifi.version>2.7.2</nifi.version>
         <nifi.standard_util_version>2.0.0-M1</nifi.standard_util_version>
 
